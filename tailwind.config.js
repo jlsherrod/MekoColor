@@ -1,9 +1,18 @@
-/** @type {import('tailwindcss').Config} */
+import colors from "tailwindcss/colors";
+
 export default {
-  content: [],
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
+    colors: {
+      tan: colors.amber,
+      black: colors.black,
+      white: colors.white,
+      gray: colors.gray,
+    },
+    fontFamily: {
+      sans: ["Lexend", "sans-serif"],
+    },
     extend: {},
   },
   plugins: [],
-}
-
+};
