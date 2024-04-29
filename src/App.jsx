@@ -1,21 +1,22 @@
+import { Link, Outlet, Route, Routes } from "react-router-dom";
+
 import "tailwindcss/tailwind.css";
+
+import Clients from "./pages/Clients.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Login from "./pages/Login.jsx";
+import NoMatch from "./pages/NoMatch.jsx";
 
 function App() {
   return (
-    <div className="flex flex-col items-center justify-center space-y-8 m-auto">
-      <h1 className="font-sans font-bold text-2xl">MEKO COLOR</h1>
-      <img
-        className="max-w-36 border-2 border-black shadow-sm"
-        src="/catface.jpg"
-      ></img>
-      <h2 className="font-sans font-bold text-2xl">PASSWORD?</h2>
-      <form className="flex flex-col justfy-between">
-        <input className="border-2 border-black shadow-sm" type="password" />
-        <button className="ml-auto bg-amber-400 border-2 border-black shadow-sm mt-4 p-1 px-2 text-xs font-body">
-          LOGIN
-        </button>
-      </form>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Clients" element={<Clients />} />
+        <Route path="/*" element={<NoMatch />} />
+      </Routes>
+    </>
   );
 }
 
