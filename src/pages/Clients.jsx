@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import EditClient from "../components/EditClient.jsx";
 
 export default function Clients() {
   return (
@@ -13,7 +14,7 @@ export default function Clients() {
             className="m-auto border-black border-2"
             src="/headshot.jpg"
           ></img>
-          <div className="mt-4 space-y-4 flex-col columns-2 w-8/12">
+          <div className="mt-4 space-y-4 flex-auto columns-2">
             <h2>FIRST NAME</h2>
             <h3>Francis</h3>
             <h2>LAST NAME</h2>
@@ -28,6 +29,7 @@ export default function Clients() {
               <Link to="/">EDIT</Link>
             </button>
           </div>
+          <EditClient />
         </div>
       </div>
     </>
