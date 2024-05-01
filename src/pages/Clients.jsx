@@ -1,7 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import EditClient from "../components/EditClient.jsx";
 
 export default function Clients() {
+  const [showComponent, setShowComponent] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
+  const handleClick = () => {
+    setShowComponent(true);
+    setShowButton(false);
+  };
+
   return (
     <>
       <button className="mt-8 ml-8 bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-s font-body">
@@ -25,11 +34,16 @@ export default function Clients() {
             <h3>francine@gmail.com</h3>
           </div>
           <div className="flex">
-            <button className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-4 p-1 px-2 text-xs font-body">
-              <Link to="/">EDIT</Link>
-            </button>
+            {showButton && (
+              <button
+                onClick={handleClick}
+                className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-4 p-1 px-2 text-xs font-body"
+              >
+                EDIT
+              </button>
+            )}
           </div>
-          <EditClient />
+          {showComponent && <EditClient />}
         </div>
       </div>
     </>
