@@ -27,9 +27,11 @@ export default function EditClient() {
         </label>
       </div>{" "}
       <div className="flex">
-        <button className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-4 p-1 px-2 text-xs font-body">
-          <Link to="/">SUBMIT</Link>
-        </button>
+        <Link to="/" className="ml-auto">
+          <button className="w-24 bg-amber-400 border-2 border-black shadow-sm mt-4 p-1 px-2 text-xs font-body">
+            SUBMIT
+          </button>
+        </Link>
       </div>
     </>
   );
