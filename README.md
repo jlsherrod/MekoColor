@@ -1,8 +1,7 @@
-# React + Vite
+OK, so this is a hair color tracking app. It is meant to be used by professional hairstylists to log color formulations for each client.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+I'm gonna use this file to track ideas and new features that come to mind during development. 
 
-Currently, two official plugins are available:
+1. THe 'appointments' component on the dashboard should be hidden unless there are active apointments available to display.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. 
