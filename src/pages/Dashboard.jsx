@@ -11,16 +11,23 @@ export default function Dashboard() {
         <Search />
         <NewClientButton />
         <Appointments />
-        <Link to="/" className="ml-auto">
-          <button className="bg-amber-400 border-2 border-black shadow-sm mt-16 p-1 px-2 text-xs font-body">
-            LOGOUT
-          </button>
-        </Link>
-        <Link to="/Clients" className="ml-auto ">
-          <button className="bg-amber-400 border-2 border-black shadow-sm mt-16 p-1 px-2 text-xs font-body">
-            TO CLIENTS
-          </button>
-        </Link>
+        <div className="flex flex-col space-y-8">
+          <Link to="/" className="ml-auto">
+            <button className="bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
+              LOGOUT
+            </button>
+          </Link>
+          <Link to="/Clients" className="ml-auto ">
+            <button className="bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
+              TO CLIENTS
+            </button>
+          </Link>
+          <Link to="/Formulation" className="ml-auto ">
+            <button className="bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
+              TO FORMULATION
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
