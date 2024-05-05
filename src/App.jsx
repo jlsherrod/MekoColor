@@ -13,9 +13,9 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/Clients" element={<Clients />} />
-        <Route path="/Formulation" element={<Formulation />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/clients/:id" element={<Clients />} />
+        <Route path="/formulation" element={<Formulation />} />
         <Route path="/*" element={<NoMatch />} />
       </Routes>
     </>
