@@ -38,5 +38,14 @@ createServer({
       let attrs = JSON.parse(request.requestBody);
       return schema.clients.create(attrs);
     });
+    this.patch("/clients/:id", (schema, request) => {
+      let id = request.params.id;
+
+      let attrs = JSON.parse(request.requestBody);
+      let client = schema.clients.find(id);
+      client.update(attrs);
+
+      return client.update(attrs);
+    });
   },
 });
