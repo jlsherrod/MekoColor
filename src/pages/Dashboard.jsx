@@ -58,19 +58,20 @@ export default function Dashboard() {
           )}
         </div>
         {showComponent && <NewClient />}
-      </div>
-      <Appointments />
-      <div className="flex flex-col space-y-8">
-        <Link to="/" className="ml-auto">
-          <button className="bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
-            LOGOUT
-          </button>
-        </Link>
-        <Link to="/Formulation" className="ml-auto ">
-          <button className="bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
-            TO FORMULATION
-          </button>
-        </Link>
+
+        <Appointments />
+        <div className="flex flex-col space-y-4">
+          <Link to="/" className="ml-auto">
+            <button className="ml-auto bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
+              LOGOUT
+            </button>
+          </Link>
+          <Link to="/Formulation" className="ml-auto">
+            <button className="bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-xs font-body">
+              TO FORMULATION
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

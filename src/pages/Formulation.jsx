@@ -5,9 +5,9 @@ export default function Formulation() {
   return (
     <div className="container">
       <button className="mt-8 ml-8 bg-amber-400 border-2 border-black shadow-sm p-1 px-2 text-s font-body">
-        <Link to="/">🔙</Link>
+        <Link to="/Dashboard">🔙</Link>
       </button>
-      <div className="flex flex-col items-center justify-center space-y-8 mt-8">
+      <div className="flex flex-col items-center justify-center space-y-8 my-8">
         <h1 className="font-sans text-2xl">FRANCIS FARMER</h1>
         <Formulas />
         <form>
