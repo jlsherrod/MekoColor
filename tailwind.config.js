@@ -5,6 +5,7 @@ export default {
   theme: {
     colors: {
       tan: "#fef2e8",
+      teal: "#DAF5F0",
       black: colors.black,
       white: colors.white,
       gray: colors.gray,
