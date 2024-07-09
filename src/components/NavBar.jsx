@@ -29,18 +29,25 @@ export default function NavBar() {
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal p-6">
-      <img
-        className="max-w-10 border-2 border-black shadow-black"
-        src="/catface.jpg"
-      />
-      <ReactSearchBox
-        fuseConfigs={{ keys: ["first_name", "last_name"] }}
-        placeholder="Search Clients"
-        data={clients}
-        onSelect={handleSearch}
-        leftIcon=<>🔎</>
-        inputBorderColor="black"
-      />
+      <div className="flex">
+        <Link to="/dashboard">
+          <img
+            className="max-w-10 border-2 border-black shadow-black"
+            src="/catface.jpg"
+            alt="logo"
+          />
+        </Link>
+        <div className="ml-4">
+          <ReactSearchBox
+            fuseConfigs={{ keys: ["first_name", "last_name"] }}
+            placeholder="Search Clients"
+            data={clients}
+            onSelect={handleSearch}
+            leftIcon=<>🔎</>
+            inputBorderColor="black"
+          />
+        </div>
+      </div>
       <Link to="/NewClient">
         <button className="px-2 h-8 font-bold bg-amber-400 border-2 border-black shadow-sm text-s font-body">
           ＋{" "}

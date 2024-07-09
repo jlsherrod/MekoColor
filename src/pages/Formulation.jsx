@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Formulas from "../components/Formulas.jsx";
 
 export default function Formulation() {
   return (
