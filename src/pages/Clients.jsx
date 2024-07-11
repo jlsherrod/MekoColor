@@ -5,17 +5,15 @@ import EditClient from "../components/EditClient.jsx";
 import NavBar from "../components/NavBar.jsx";
 
 export default function Clients() {
-  let { clientId } = useParams(); //Get clientId from URL params
+  let { id } = useParams(); //Get id from URL params
   const [showComponent, setShowComponent] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [client, setClient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log({ clientId });
-
   useEffect(() => {
-    fetch(`/api/clients/${clientId}`)
+    fetch(`/api/clients/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not OK");
@@ -23,7 +21,7 @@ export default function Clients() {
         return response.json();
       })
       .then((data) => {
-        setClient(data);
+        setClient(data.client);
         setLoading(false);
       })
       .catch((error) => {
@@ -31,7 +29,7 @@ export default function Clients() {
         setError(error);
         setLoading(false);
       });
-  }, [clientId]);
+  }, [id]);
 
   const openEdit = () => {
     setShowComponent(true);
@@ -59,7 +57,6 @@ export default function Clients() {
           {client.last_name ? client.last_name.toUpperCase() : "N/A"}
         </h1>
         <div className="w-8/12">
-          <ClientFormulas clientId={clientId} />
           <label className="flex flex-col text-bold text-lg mb-4">
             FORMULA
             <textarea className="border-2 border-black shadow-sm" />
@@ -72,7 +69,7 @@ export default function Clients() {
           <label className="flex flex-col text-bold text-lg mb-4 mt-4">
             PREVIOUS
             <p className="bg-white border-2 border-black shadow-sm p-1">
-              Previous formulations go here in chronological order.
+              <ClientFormulas id={id} />
             </p>
           </label>
           <div className="flex justify-end">

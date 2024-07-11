@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-export default function ClientFormulas({ clientId }) {
+export default function ClientFormulas({ id }) {
   const [formulas, setFormulas] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/clients/${clientId}/formulas`)
+    fetch(`/api/clients/${id}/formulas`)
       .then((response) => response.json())
       .then((data) => setFormulas(data.formulas));
-  }, [clientId]);
+  }, [id]);
 
   return (
     <div>
-      <h1>Formulas for Client {clientId}</h1>
       <ul>
         {formulas.map((formula) => (
           <li key={formula.id}>
-            {formula.name}: {formula.description}
+            <span className="font-bold">{formula.date}:</span> {formula.content}
           </li>
         ))}
       </ul>
