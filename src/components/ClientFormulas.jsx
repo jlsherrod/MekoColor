@@ -6,8 +6,12 @@ export default function ClientFormulas({ id }) {
   useEffect(() => {
     fetch(`/api/clients/${id}/formulas`)
       .then((response) => response.json())
-      .then((data) => setFormulas(data.formulas));
+      .then((data) => setFormulas(data.formulas || []));
   }, [id]);
+
+  if (formulas.length === 0) {
+    return <div>NO PREVIOUS FORMULAS</div>;
+  }
 
   return (
     <div>
