@@ -49,6 +49,44 @@ export default function Clients() {
     return <div>No client found</div>;
   }
 
+  const handleCopyPrevious = async () => {
+    try {
+      //Fetch the client's formulas
+      const response = await fetch("/api/clients/$(id)/formulas");
+      const data = await response.json();
+      // Check if there are any formulas
+      if (!data || !data.length) {
+        console.log("No previous formulas to copy");
+        return;
+      }
+      // Get the most recent formula
+      const recentFormula = data.formulas[data.formulas.length - 1];
+      // Prepare the new formula object
+      const newFormula = {
+        name: recentFormula.name,
+        date: recentFormula.date,
+        content: recentFormula.content,
+      };
+      // Post the new Formula
+      const postResponse = await fetch(`/api/clients/${id}/formulas`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newFormula),
+      });
+
+      if (!postResponse.ok) {
+        throw new Error("Failed to add new formula");
+      }
+      // Notify the parent component to refresh formulas
+      onFormulaAdded();
+      console.log("Formula copied successfully");
+    } catch (error) {
+      console.error("Error copying formula:", error);
+    }
+  };
+
   const openEdit = () => {
     setShowComponent(true);
     setShowButton(false);
@@ -71,7 +109,10 @@ export default function Clients() {
             </div>
           </label>
           <div className="flex justify-end">
-            <button className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-2 p-1 px-2 text-xs font-body">
+            <button
+              onClick={handleCopyPrevious}
+              className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-2 p-1 px-2 text-xs font-body"
+            >
               COPY PREV
             </button>
           </div>

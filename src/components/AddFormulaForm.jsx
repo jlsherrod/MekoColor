@@ -1,35 +1,26 @@
 import React, { useState } from "react";
+import { addFormula } from "../utils/api";
 
 export default function AddFormulaForm({ id, onFormulaAdded }) {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newFormula = {
-      name,
       date,
       content,
     };
 
-    fetch(`/api/clients/${id}/formulas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newFormula),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("New formula added:", data);
-        onFormulaAdded();
-        // Optionally, clear the form or provide user feedback
-      })
-      .catch((error) => {
-        console.error("Error adding new formula:", error);
-      });
+    try {
+      await addFormula(id, newFormula);
+      console.log("New formula added successfully");
+      onFormulaAdded();
+    } catch (error) {
+      console.error("Error adding new formula:", error);
+    }
   };
 
   return (
