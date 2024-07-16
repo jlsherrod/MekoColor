@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import AddFormulaForm from "../components/AddFormulaForm.jsx";
 import ClientFormulas from "../components/ClientFormulas.jsx";
 import EditClient from "../components/EditClient.jsx";
 import NavBar from "../components/NavBar.jsx";
 
 export default function Clients() {
-  let { id } = useParams(); //Get id from URL params
+  const { id } = useParams(); //Get id from URL params
   const [showComponent, setShowComponent] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [client, setClient] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -31,9 +33,8 @@ export default function Clients() {
       });
   }, [id]);
 
-  const openEdit = () => {
-    setShowComponent(true);
-    setShowButton(false);
+  const handleFormulaAdded = () => {
+    setRefreshTrigger(refreshTrigger + 1);
   };
 
   if (loading) {
@@ -48,6 +49,11 @@ export default function Clients() {
     return <div>No client found</div>;
   }
 
+  const openEdit = () => {
+    setShowComponent(true);
+    setShowButton(false);
+  };
+
   return (
     <>
       <NavBar />
@@ -57,20 +63,12 @@ export default function Clients() {
           {client.last_name ? client.last_name.toUpperCase() : "N/A"}
         </h1>
         <div className="w-8/12">
-          <label className="flex flex-col text-bold text-lg mb-4">
-            FORMULA
-            <textarea className="border-2 border-black shadow-sm" />
-          </label>
-          <div className="flex justify-end">
-            <button className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-2 p-1 px-2 text-xs font-body">
-              SUBMIT
-            </button>
-          </div>
+          <AddFormulaForm id={id} onFormulaAdded={handleFormulaAdded} />
           <label className="flex flex-col text-bold text-lg mb-4 mt-4">
             PREVIOUS
-            <p className="bg-white border-2 border-black shadow-sm p-1">
-              <ClientFormulas id={id} />
-            </p>
+            <div className="bg-white border-2 border-black shadow-sm p-1">
+              <ClientFormulas id={id} refreshTrigger={refreshTrigger} />
+            </div>
           </label>
           <div className="flex justify-end">
             <button className="w-24 ml-auto bg-amber-400 border-2 border-black shadow-sm mt-2 p-1 px-2 text-xs font-body">

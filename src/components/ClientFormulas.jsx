@@ -1,27 +1,31 @@
 import React, { useEffect, useState } from "react";
 
-export default function ClientFormulas({ id }) {
+export default function ClientFormulas({ id, refreshTrigger }) {
   const [formulas, setFormulas] = useState([]);
 
-  useEffect(() => {
+  const fetchFormulas = () => {
     fetch(`/api/clients/${id}/formulas`)
       .then((response) => response.json())
       .then((data) => setFormulas(data.formulas || []));
-  }, [id]);
+  };
+
+  useEffect(() => {
+    fetchFormulas();
+  }, [id, refreshTrigger]);
 
   if (formulas.length === 0) {
     return <div>NO PREVIOUS FORMULAS</div>;
   }
 
   return (
-    <div>
-      <ul>
-        {formulas.map((formula) => (
-          <li key={formula.id}>
-            <span className="font-bold">{formula.date}:</span> {formula.content}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul>
+      {formulas.map((formula) => (
+        <li key={formula.id}>
+          <span className="font-bold">
+            Date: {formula.date}: {formula.content}
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }

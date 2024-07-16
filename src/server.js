@@ -74,8 +74,27 @@ createServer({
     });
     this.get("/clients/:id/formulas", (schema, request) => {
       let id = request.params.id;
+      let client = schema.clients.find(id);
 
-      return schema.clients.find(id).formulas;
+      return client.formulas;
+    });
+
+    this.post("/clients/:id/formulas", (schema, request) => {
+      let clientId = request.params.id;
+      let attrs = JSON.parse(request.requestBody);
+      let client = schema.clients.find(clientId);
+
+      if (!client) {
+        return new Response(404, {}, { error: "Client not found" });
+      }
+
+      attrs.clientId = clientId;
+      let newFormula = schema.formulas.create(attrs);
+
+      client.formulas.add(newFormula);
+      client.save();
+
+      return client.formulas;
     });
   },
 });
