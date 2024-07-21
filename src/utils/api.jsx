@@ -18,3 +18,19 @@ export const addFormula = async (id, formulaData) => {
     throw error;
   }
 };
+
+export const fetchFormulas = async (id) => {
+  try {
+    const response = await fetch(`/api/clients/${id}/formulas`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch formulas");
+    }
+
+    const data = await response.json();
+    return data.formulas;
+  } catch (error) {
+    console.error("Error fetching formulas:", error);
+    throw error;
+  }
+};

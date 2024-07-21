@@ -10,7 +10,7 @@ export default function AddFormulaForm({ id, onFormulaAdded }) {
     e.preventDefault();
 
     const newFormula = {
-      date,
+      date: new Date().toISOString().split("T")[0],
       content,
     };
 
@@ -26,15 +26,6 @@ export default function AddFormulaForm({ id, onFormulaAdded }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="bg-white border-2 border-black shadow-sm p-1">
-        <div>
-          <label>Date:</label>
-          <input
-            type="text"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </div>
         <div>
           <label>Formula:</label>
           <input

@@ -4,6 +4,9 @@ import AddFormulaForm from "../components/AddFormulaForm.jsx";
 import ClientFormulas from "../components/ClientFormulas.jsx";
 import EditClient from "../components/EditClient.jsx";
 import NavBar from "../components/NavBar.jsx";
+import { addFormula, fetchFormulas } from "../utils/api";
+
+import { v4 as uuidv4 } from "uuid";
 
 export default function Clients() {
   const { id } = useParams(); //Get id from URL params
@@ -37,6 +40,25 @@ export default function Clients() {
     setRefreshTrigger(refreshTrigger + 1);
   };
 
+  const handleCopyPrevious = async () => {
+    try {
+      const formulas = await fetchFormulas(id);
+      if (formulas.length > 0) {
+        const lastFormula = formulas[formulas.length - 1];
+        const newFormula = {
+          ...lastFormula,
+          date: new Date().toLocaleDateString(),
+          id: uuidv4(),
+        };
+        delete newFormula.is;
+        await addFormula(id, newFormula);
+        handleFormulaAdded();
+      }
+    } catch (error) {
+      console.error("Error copying formula:", error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -48,44 +70,6 @@ export default function Clients() {
   if (!client) {
     return <div>No client found</div>;
   }
-
-  const handleCopyPrevious = async () => {
-    try {
-      //Fetch the client's formulas
-      const response = await fetch("/api/clients/$(id)/formulas");
-      const data = await response.json();
-      // Check if there are any formulas
-      if (!data || !data.length) {
-        console.log("No previous formulas to copy");
-        return;
-      }
-      // Get the most recent formula
-      const recentFormula = data.formulas[data.formulas.length - 1];
-      // Prepare the new formula object
-      const newFormula = {
-        name: recentFormula.name,
-        date: recentFormula.date,
-        content: recentFormula.content,
-      };
-      // Post the new Formula
-      const postResponse = await fetch(`/api/clients/${id}/formulas`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newFormula),
-      });
-
-      if (!postResponse.ok) {
-        throw new Error("Failed to add new formula");
-      }
-      // Notify the parent component to refresh formulas
-      onFormulaAdded();
-      console.log("Formula copied successfully");
-    } catch (error) {
-      console.error("Error copying formula:", error);
-    }
-  };
 
   const openEdit = () => {
     setShowComponent(true);
