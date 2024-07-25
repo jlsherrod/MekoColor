@@ -1,3 +1,13 @@
+import { supabase } from "../supabaseClient.js";
+
+export const fetchClients = async () => {
+  const { data, error } = await supabase.from("clients").select("*");
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
 export const addFormula = async (id, formulaData) => {
   try {
     const response = await fetch(`/api/clients/${id}/formulas`, {
