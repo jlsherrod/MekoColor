@@ -1,16 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSearchBox from "react-search-box";
+import { fetchClients } from "../utils/api";
 
 export default function NavBar() {
   const [clients, setClients] = useState([]);
   const navigate = useNavigate();
 
+  // Old MirageJS Call
+  // useEffect(() => {
+  //   fetch("/api/clients")
+  //     .then((response) => response.json())
+  //     .then((data) => setClients(formatClientData(data.clients)))
+  //     .catch((error) => console.error("Error:", error));
+  // }, []);
+  //
   useEffect(() => {
-    fetch("/api/clients")
-      .then((response) => response.json())
-      .then((data) => setClients(formatClientData(data.clients)))
-      .catch((error) => console.error("Error:", error));
+    const loadClients = async () => {
+      const data = await fetchClients();
+      setClients(formatClientData(data));
+    };
+
+    loadClients();
   }, []);
 
   const formatClientData = (clients) => {

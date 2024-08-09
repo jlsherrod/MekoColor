@@ -4,7 +4,13 @@ import AddFormulaForm from "../components/AddFormulaForm.jsx";
 import ClientFormulas from "../components/ClientFormulas.jsx";
 import EditClient from "../components/EditClient.jsx";
 import NavBar from "../components/NavBar.jsx";
-import { addFormula, fetchFormulas } from "../utils/api";
+import { supabase } from "../supabaseClient.js";
+import {
+  addFormula,
+  fetchClients,
+  fetchFormulas,
+  getClientById,
+} from "../utils/api";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,23 +24,19 @@ export default function Clients() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/clients/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not OK");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setClient(data.client);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setError(error);
-        setLoading(false);
-      });
-  }, [id]);
+    const fetchClient = async () => {
+      try {
+        const clientData = await getClientById(id); // Fetch client by ID
+        setClient(clientData); // Set the client data
+      } catch (error) {
+        setError(error); // Handle any errors
+      } finally {
+        setLoading(false); // Set loading to false
+      }
+    };
+
+    fetchClient();
+  }, [id]); // Refetch if the ID changes
 
   const handleFormulaAdded = () => {
     setRefreshTrigger(refreshTrigger + 1);

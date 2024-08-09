@@ -3,18 +3,18 @@ import { fetchFormulas } from "../utils/api";
 
 export default function ClientFormulas({ id, refreshTrigger }) {
   const [formulas, setFormulas] = useState([]);
+  const [error, setError] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getFormulas = async () => {
       try {
-        const data = await fetchFormulas(id);
-        setFormulas(data);
+        const formulaData = await fetchFormulas(id);
+        setFormulas(formulaData);
       } catch (error) {
-        console.error("Error fetching formulas:", error);
+        setError(error);
       }
     };
-
-    fetchData();
+    getFormulas();
   }, [id, refreshTrigger]);
 
   if (formulas.length === 0) {
@@ -26,7 +26,7 @@ export default function ClientFormulas({ id, refreshTrigger }) {
       {formulas.toReversed().map((formula) => (
         <li key={formula.id}>
           <span className="font-bold">
-            {formula.date}: {formula.content}
+            {formula.created_at}: {formula.content}
           </span>
         </li>
       ))}
