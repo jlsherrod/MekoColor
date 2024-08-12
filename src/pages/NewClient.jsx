@@ -1,37 +1,41 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { supabase } from "../supabaseClient";
 
 export default function NewClient() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [tel, setTel] = useState();
   const [email, setEmail] = useState("");
+
   const handleNewClient = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/clients", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          tel: tel,
-          email: email,
-        }),
-      });
-      if (response.ok) {
-        console.log("Client created successfully");
-        setFirstName(""); // Clear input field after successful submission
-        setLastName(""); // Clear input field after successful submission
-        setTel(""); // Clear input field after successful submission
-        setEmail(""); // Clear input field after successful submission
-      } else {
-        console.error("Failed to create client");
+      const { data, error } = await supabase
+        .from("clients")
+        .insert([
+          {
+            first_name: firstName,
+            last_name: lastName,
+            tel: tel,
+            email: email,
+          },
+        ])
+        .select();
+
+      if (error) {
+        throw new Error(`Failed to create client: ${error.message}`);
       }
+
+      console.log("Client created successfully");
+      setFirstName(""); // Clear input field after successful submission
+      setLastName(""); // Clear input field after successful submission
+      setTel(""); // Clear input field after successful submission
+      setEmail(""); // Clear input field after successful submission
+
+      return data;
     } catch (error) {
       console.error("Error creating client:", error);
     }
