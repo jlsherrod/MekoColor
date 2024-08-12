@@ -7,14 +7,6 @@ export default function NavBar() {
   const [clients, setClients] = useState([]);
   const navigate = useNavigate();
 
-  // Old MirageJS Call
-  // useEffect(() => {
-  //   fetch("/api/clients")
-  //     .then((response) => response.json())
-  //     .then((data) => setClients(formatClientData(data.clients)))
-  //     .catch((error) => console.error("Error:", error));
-  // }, []);
-  //
   useEffect(() => {
     const loadClients = async () => {
       const data = await fetchClients();

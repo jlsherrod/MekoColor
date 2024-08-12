@@ -10,7 +10,7 @@ export default function AddFormulaForm({ id, onFormulaAdded }) {
     e.preventDefault();
 
     const newFormula = {
-      date: new Date().toLocaleDateString(),
+      created_at: new Date().toLocaleDateString(),
       content,
     };
 

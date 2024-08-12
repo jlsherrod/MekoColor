@@ -50,19 +50,18 @@ export const fetchFormulas = async (id) => {
 
 export const addFormula = async (id, formulaData) => {
   try {
-    const response = await fetch(`/api/clients/${id}/formulas`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formulaData),
-    });
+    const { content } = formulaData;
+    const createdAt = new Date().toISOString();
 
-    if (!response.ok) {
-      throw new Error("Failed to add new formula");
+    const { data, error } = await supabase
+      .from("formulas")
+      .insert([{ created_at: createdAt, client_id: id, content: content }])
+      .select();
+    if (error) {
+      throw new Error(`Failed to add new formula: ${error.message}`);
     }
 
-    return response.json();
+    return data[0];
   } catch (error) {
     console.error("Error adding formula:", error);
     throw error;
